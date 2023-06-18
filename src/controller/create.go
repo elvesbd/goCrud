@@ -3,8 +3,8 @@ package controller
 import (
 	"fmt"
 
-	"github.com/elvesbd/goCrud/src/configuration/restErr"
 	"github.com/elvesbd/goCrud/src/controller/model/request"
+	"github.com/elvesbd/goCrud/src/validation"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,7 +13,7 @@ func Create(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&userRequest)
 	if err != nil {
-		restErr := restErr.NewBadRequestError(fmt.Sprintf("There are some incorrect fields, error=%s", err.Error()))
+		restErr := validation.ValidateUserError(err)
 		c.JSON(restErr.Code, restErr)
 		return
 	}
