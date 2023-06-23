@@ -1,6 +1,11 @@
 package model
 
-import "github.com/elvesbd/goCrud/src/configuration/restErr"
+import (
+	"crypto/md5"
+	"encoding/hex"
+
+	"github.com/elvesbd/goCrud/src/configuration/restErr"
+)
 
 type UserDomain struct {
 	Name     string
@@ -14,4 +19,11 @@ type UserDomainInterface interface {
 	UpdateUser(string, UserDomain) *restErr.RestErr
 	FindUser(string) (*UserDomain, *restErr.RestErr)
 	DeleteUser(string) *restErr.RestErr
+}
+
+func (u *UserDomain) EncryptPassword() {
+	hash := md5.New()
+	defer hash.Reset()
+	hash.Write([]byte(u.Password))
+	u.Password = hex.EncodeToString(hash.Sum(nil))
 }
