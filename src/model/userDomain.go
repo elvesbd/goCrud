@@ -15,8 +15,8 @@ type UserDomain struct {
 }
 
 type UserDomainInterface interface {
-	CreateUser(UserDomain) *restErr.RestErr
-	UpdateUser(string, UserDomain) *restErr.RestErr
+	CreateUser() *restErr.RestErr
+	UpdateUser(string) *restErr.RestErr
 	FindUser(string) (*UserDomain, *restErr.RestErr)
 	DeleteUser(string) *restErr.RestErr
 }
