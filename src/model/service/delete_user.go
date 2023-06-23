@@ -1,7 +1,7 @@
-package model
+package service
 
 import "github.com/elvesbd/goCrud/src/configuration/restErr"
 
-func (*userDomain) Update(string) *restErr.RestErr {
+func (*userDomainService) Delete(string) *restErr.RestErr {
 	return nil
 }

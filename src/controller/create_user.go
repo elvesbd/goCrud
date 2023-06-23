@@ -6,6 +6,7 @@ import (
 	"github.com/elvesbd/goCrud/src/configuration/logger"
 	"github.com/elvesbd/goCrud/src/controller/model/request"
 	"github.com/elvesbd/goCrud/src/model"
+	"github.com/elvesbd/goCrud/src/model/service"
 	"github.com/elvesbd/goCrud/src/validation"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -31,13 +32,15 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	user := model.NewUser(
+	user := model.NewUserDomain(
 		userRequest.Name,
 		userRequest.Email,
 		userRequest.Password,
 		userRequest.Age,
 	)
-	if err := user.Create(); err != nil {
+
+	service := service.NewUserService()
+	if err := service.Create(user); err != nil {
 		c.JSON(err.Code, err)
 		return
 	}

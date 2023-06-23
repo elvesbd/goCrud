@@ -3,8 +3,6 @@ package model
 import (
 	"crypto/md5"
 	"encoding/hex"
-
-	"github.com/elvesbd/goCrud/src/configuration/restErr"
 )
 
 type userDomain struct {
@@ -14,17 +12,35 @@ type userDomain struct {
 	age      int8
 }
 
-func NewUser(name, email, password string, age int8) UserDomainInterface {
+type UserDomainInterface interface {
+	GetName() string
+	GetEmail() string
+	GetPassword() string
+	GetAge() int8
+
+	EncryptPassword()
+}
+
+func NewUserDomain(name, email, password string, age int8) UserDomainInterface {
 	return &userDomain{
 		name, email, password, age,
 	}
 }
 
-type UserDomainInterface interface {
-	Create() *restErr.RestErr
-	Update(string) *restErr.RestErr
-	Find(string) (*userDomain, *restErr.RestErr)
-	Delete(string) *restErr.RestErr
+func (u *userDomain) GetName() string {
+	return u.name
+}
+
+func (u *userDomain) GetEmail() string {
+	return u.email
+}
+
+func (u *userDomain) GetPassword() string {
+	return u.password
+}
+
+func (u *userDomain) GetAge() int8 {
+	return u.age
 }
 
 func (u *userDomain) EncryptPassword() {
