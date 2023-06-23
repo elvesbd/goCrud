@@ -2,6 +2,6 @@ package model
 
 import "github.com/elvesbd/goCrud/src/configuration/restErr"
 
-func (*UserDomain) Find(string) (*UserDomain, *restErr.RestErr) {
+func (*userDomain) Find(string) (*userDomain, *restErr.RestErr) {
 	return nil, nil
 }

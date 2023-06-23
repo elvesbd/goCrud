@@ -7,15 +7,15 @@ import (
 	"github.com/elvesbd/goCrud/src/configuration/restErr"
 )
 
-type UserDomain struct {
-	Name     string
-	Email    string
-	Password string
-	Age      int8
+type userDomain struct {
+	name     string
+	email    string
+	password string
+	age      int8
 }
 
 func NewUser(name, email, password string, age int8) UserDomainInterface {
-	return &UserDomain{
+	return &userDomain{
 		name, email, password, age,
 	}
 }
@@ -23,13 +23,13 @@ func NewUser(name, email, password string, age int8) UserDomainInterface {
 type UserDomainInterface interface {
 	Create() *restErr.RestErr
 	Update(string) *restErr.RestErr
-	Find(string) (*UserDomain, *restErr.RestErr)
+	Find(string) (*userDomain, *restErr.RestErr)
 	Delete(string) *restErr.RestErr
 }
 
-func (u *UserDomain) EncryptPassword() {
+func (u *userDomain) EncryptPassword() {
 	hash := md5.New()
 	defer hash.Reset()
-	hash.Write([]byte(u.Password))
-	u.Password = hex.EncodeToString(hash.Sum(nil))
+	hash.Write([]byte(u.password))
+	u.password = hex.EncodeToString(hash.Sum(nil))
 }
