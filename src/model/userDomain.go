@@ -10,24 +10,21 @@ import (
 type UserDomain struct {
 	Name     string
 	Email    string
-	Age      int8
 	Password string
+	Age      int8
 }
 
-func NewUser(name, email, password string, age int8) *UserDomain {
+func NewUser(name, email, password string, age int8) UserDomainInterface {
 	return &UserDomain{
-		Name:     name,
-		Email:    email,
-		Age:      age,
-		Password: password,
+		name, email, password, age,
 	}
 }
 
 type UserDomainInterface interface {
-	CreateUser() *restErr.RestErr
-	UpdateUser(string) *restErr.RestErr
-	FindUser(string) (*UserDomain, *restErr.RestErr)
-	DeleteUser(string) *restErr.RestErr
+	Create() *restErr.RestErr
+	Update(string) *restErr.RestErr
+	Find(string) (*UserDomain, *restErr.RestErr)
+	Delete(string) *restErr.RestErr
 }
 
 func (u *UserDomain) EncryptPassword() {

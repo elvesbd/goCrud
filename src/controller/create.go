@@ -5,10 +5,14 @@ import (
 
 	"github.com/elvesbd/goCrud/src/configuration/logger"
 	"github.com/elvesbd/goCrud/src/controller/model/request"
-	"github.com/elvesbd/goCrud/src/controller/model/response"
+	"github.com/elvesbd/goCrud/src/model"
 	"github.com/elvesbd/goCrud/src/validation"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+)
+
+var (
+	UserDomainInterface model.UserDomainInterface
 )
 
 func Create(c *gin.Context) {
@@ -27,16 +31,20 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	response := response.UserResponse{
-		ID:    "123456",
-		Email: userRequest.Email,
-		Name:  userRequest.Name,
-		Age:   userRequest.Age,
+	user := model.NewUser(
+		userRequest.Name,
+		userRequest.Email,
+		userRequest.Password,
+		userRequest.Age,
+	)
+	if err := user.Create(); err != nil {
+		c.JSON(err.Code, err)
+		return
 	}
 
 	logger.Info("User created successfully",
 		zap.String("journey", "create user"),
 	)
 
-	c.JSON(http.StatusOK, response)
+	c.String(http.StatusOK, "")
 }
