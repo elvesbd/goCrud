@@ -10,8 +10,17 @@ import (
 type UserDomain struct {
 	Name     string
 	Email    string
-	Age      string
+	Age      int8
 	Password string
+}
+
+func NewUser(name, email, password string, age int8) *UserDomain {
+	return &UserDomain{
+		Name:     name,
+		Email:    email,
+		Age:      age,
+		Password: password,
+	}
 }
 
 type UserDomainInterface interface {
