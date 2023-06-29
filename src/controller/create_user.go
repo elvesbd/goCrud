@@ -6,8 +6,8 @@ import (
 	"github.com/elvesbd/goCrud/src/configuration/logger"
 	"github.com/elvesbd/goCrud/src/controller/model/request"
 	"github.com/elvesbd/goCrud/src/model"
-	"github.com/elvesbd/goCrud/src/model/service"
 	"github.com/elvesbd/goCrud/src/validation"
+	"github.com/elvesbd/goCrud/src/view"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -16,7 +16,7 @@ var (
 	UserDomainInterface model.UserDomainInterface
 )
 
-func Create(c *gin.Context) {
+func (uc *userControllerInterface) Create(c *gin.Context) {
 	logger.Info("Init create user controller",
 		zap.String("journey", "create user"),
 	)
@@ -39,8 +39,7 @@ func Create(c *gin.Context) {
 		userRequest.Age,
 	)
 
-	service := service.NewUserService()
-	if err := service.Create(user); err != nil {
+	if err := uc.service.Create(user); err != nil {
 		c.JSON(err.Code, err)
 		return
 	}
@@ -49,5 +48,5 @@ func Create(c *gin.Context) {
 		zap.String("journey", "create user"),
 	)
 
-	c.String(http.StatusOK, "")
+	c.JSON(http.StatusOK, view.ConvertDomainToResponse(user))
 }

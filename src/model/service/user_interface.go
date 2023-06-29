@@ -15,6 +15,6 @@ type UserDomainService interface {
 	Delete(string) *restErr.RestErr
 }
 
-func NewUserService() UserDomainService {
+func NewUserDomainService() UserDomainService {
 	return &userDomainService{}
 }
