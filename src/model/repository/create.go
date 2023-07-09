@@ -22,7 +22,7 @@ func (ur *userRepository) Create(userDomain model.UserDomainInterface) (model.Us
 	collectionName := os.Getenv(MONGODB_USER_COLLECTION)
 	collection := ur.databaseConnection.Collection(collectionName)
 
-	value := mapper.ConvertDomainToEntity(userDomain)
+	value := mapper.DomainToEntity(userDomain)
 
 	result, err := collection.InsertOne(context.Background(), value)
 	if err != nil {
@@ -37,5 +37,5 @@ func (ur *userRepository) Create(userDomain model.UserDomainInterface) (model.Us
 		zap.String("userId", string(value.ID.Hex())),
 		zap.String("journey", "createUser"),
 	)
-	return mapper.ConvertEntityToDomain(*value), nil
+	return mapper.EntityToDomain(*value), nil
 }

@@ -5,7 +5,7 @@ import (
 	"github.com/elvesbd/goCrud/src/model/repository/entity"
 )
 
-func ConvertDomainToEntity(
+func DomainToEntity(
 	domain model.UserDomainInterface,
 ) *entity.UserEntity {
 	return &entity.UserEntity{
