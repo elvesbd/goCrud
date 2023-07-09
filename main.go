@@ -1,12 +1,12 @@
 package main
 
 import (
+	"context"
 	"log"
 
+	"github.com/elvesbd/goCrud/src/configuration/database/mongodb"
 	"github.com/elvesbd/goCrud/src/configuration/logger"
-	"github.com/elvesbd/goCrud/src/controller"
 	"github.com/elvesbd/goCrud/src/controller/routes"
-	"github.com/elvesbd/goCrud/src/model/service"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -18,12 +18,16 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	// init dependencies
-	userService := service.NewUserDomainService()
-	userController := controller.NewUserControllerInterface(userService)
+	database, err := mongodb.NewMongoDBConnection(context.Background())
+	if err != nil {
+		log.Fatalf("Error trying to connect database, error=%s \n",
+			err.Error())
+		return
+	}
+
+	userController := initDependencies(database)
 
 	router := gin.Default()
-
 	routes.InitRoutes(&router.RouterGroup, userController)
 	if err := router.Run(":8080"); err != nil {
 		log.Fatal(err)
