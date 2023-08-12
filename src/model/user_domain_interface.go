@@ -10,11 +10,11 @@ type UserDomainInterface interface {
 	EncryptPassword()
 }
 
-func NewUserDomain(name, email, password string, age int8) UserDomainInterface {
+func NewUserDomain(email, password, name string, age int8) UserDomainInterface {
 	return &userDomain{
-		name:     name,
 		email:    email,
 		password: password,
+		name:     name,
 		age:      age,
 	}
 }

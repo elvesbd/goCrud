@@ -2,9 +2,9 @@ package model
 
 type userDomain struct {
 	id       string
-	name     string
 	email    string
 	password string
+	name     string
 	age      int8
 }
 

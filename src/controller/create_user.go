@@ -32,9 +32,9 @@ func (uc *userControllerInterface) Create(c *gin.Context) {
 	}
 
 	user := model.NewUserDomain(
-		userRequest.Name,
 		userRequest.Email,
 		userRequest.Password,
+		userRequest.Name,
 		userRequest.Age,
 	)
 

@@ -34,7 +34,7 @@ func (ur *userRepository) Create(userDomain model.UserDomainInterface) (model.Us
 
 	value.ID = result.InsertedID.(primitive.ObjectID)
 	logger.Info("CreateUser repository executed successfully",
-		zap.String("userId", string(value.ID.Hex())),
+		zap.String("userId", value.ID.Hex()),
 		zap.String("journey", "createUser"),
 	)
 	return mapper.EntityToDomain(*value), nil
